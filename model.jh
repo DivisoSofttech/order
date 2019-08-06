@@ -1,0 +1,61 @@
+entity Order{
+	orderId String,
+	customerId String,
+	storeId String,
+	date Instant,
+	grandTotal Double,
+	paymentRef String,
+	notes String,
+	email String
+}
+entity DeliveryInfo{
+	deliveryType String,
+	expectedDelivery Instant,
+	deliveryCharge Double
+}
+entity Address{
+	customerId String,
+	pincode Long,
+	houseNoOrBuildingName String,
+	roadNameAreaOrStreet String,
+	city String,
+	state String,
+	landmark String,
+	name String,
+	phone Long,
+	alternatePhone Long
+	addressType String
+}
+entity OrderLine{
+	productId Long,
+	quantity Integer,
+	pricePerUnit Double,
+	total Double
+}
+entity AuxilaryOrderLine{}
+entity Status{
+	name String
+}
+entity UniqueOrderID{
+}
+entity Notification{
+	title String,
+	message String,
+	targetId String,
+	type String,
+	image ImageBlob,
+	date Instant
+}
+
+relationship OneToMany{
+	Order {orderLines} to OrderLine , OrderLine{requiedAuxilaries} to AuxilaryOrderLine
+}
+relationship OneToOne{
+	Order {deliveryInfo} to DeliveryInfo
+}
+relationship ManyToOne{
+	DeliveryInfo {deliveryAddress} to Address , Order {status} to Status
+}
+service all with serviceImpl
+dto all with mapstruct
+paginate all with pagination

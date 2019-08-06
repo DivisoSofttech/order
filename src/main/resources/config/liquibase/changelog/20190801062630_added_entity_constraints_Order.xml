@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Order.
+    -->
+    <changeSet id="20190801062630-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="delivery_info_id"
+                                 baseTableName="jhi_order"
+                                 constraintName="fk_jhi_order_delivery_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="delivery_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="jhi_order"
+                                 constraintName="fk_jhi_order_status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="status"/>
+
+    </changeSet>
+</databaseChangeLog>
