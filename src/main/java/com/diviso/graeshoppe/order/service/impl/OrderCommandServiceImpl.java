@@ -55,14 +55,14 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class OrderCommandServiceImpl implements OrderCommandService {
 
 	private final Logger log = LoggerFactory.getLogger(OrderCommandServiceImpl.class);
-	
+
 	private final OrderRepository orderRepository;
 
-    private final SimpMessagingTemplate template;
-    
-    @Autowired
-    private NotificationService notificationService;
-	
+	private final SimpMessagingTemplate template;
+
+	@Autowired
+	private NotificationService notificationService;
+
 	private final OrderMapper orderMapper;
 
 	private final OrderSearchRepository orderSearchRepository;
@@ -90,10 +90,10 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 
 	@Autowired
 	public OrderCommandServiceImpl(OrderRepository orderRepository, OrderMapper orderMapper,
-			OrderSearchRepository orderSearchRepository,SimpMessagingTemplate template) {
+			OrderSearchRepository orderSearchRepository, SimpMessagingTemplate template) {
 		this.orderRepository = orderRepository;
 		this.orderMapper = orderMapper;
-		this.template=template;
+		this.template = template;
 		this.orderSearchRepository = orderSearchRepository;
 	}
 
@@ -114,26 +114,27 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 		order = orderRepository.save(order);
 		OrderDTO result = orderMapper.toDto(order);
 		orderSearchRepository.save(order);
-		CommandResource resource = initiateOrder(orderId, orderDTO.getStoreId(),orderDTO.getCustomerId(),orderDTO.getEmail());
-		log.info("Result Resource is "+resource);
+		CommandResource resource = initiateOrder(orderId, orderDTO.getStoreId(), orderDTO.getCustomerId(),
+				orderDTO.getEmail());
+		log.info("Result Resource is " + resource);
 		return resource;
 	}
 
-	public CommandResource initiateOrder(String trackingId, String storeId,String customerId,String email) {
+	public CommandResource initiateOrder(String trackingId, String storeId, String customerId, String email) {
 		ProcessInstanceCreateRequest processInstanceCreateRequest = new ProcessInstanceCreateRequest();
 		processInstanceCreateRequest.setProcessDefinitionId(BPM_PROCESSDEFINITION_ID);
-		
-		RestVariable restVariableCustomerId= new RestVariable();
+
+		RestVariable restVariableCustomerId = new RestVariable();
 		restVariableCustomerId.setName("customerId");
 		restVariableCustomerId.setType("string");
 		restVariableCustomerId.setValue(customerId);
-		
-		RestVariable restVariableStorekeeperId= new RestVariable();
+
+		RestVariable restVariableStorekeeperId = new RestVariable();
 		restVariableStorekeeperId.setName("storekeeperId");
 		restVariableStorekeeperId.setType("string");
 		restVariableStorekeeperId.setValue(storeId);
-		
-		processInstanceCreateRequest.setVariables(Arrays.asList(restVariableCustomerId,restVariableStorekeeperId));
+
+		processInstanceCreateRequest.setVariables(Arrays.asList(restVariableCustomerId, restVariableStorekeeperId));
 		ResponseEntity<ProcessInstanceResponse> processInstanceResponse = processInstancesApi
 				.createProcessInstance(processInstanceCreateRequest);
 		String processInstanceId = processInstanceResponse.getBody().getId();
@@ -162,20 +163,19 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 		acceptType.setType("String");
 		acceptType.setValue("manual");
 		properties.add(acceptType);
-		
+
 		RestFormProperty customerEmail = new RestFormProperty();
 		customerEmail.setId("customerEmail");
 		customerEmail.setName("customerEmail");
 		customerEmail.setType("String");
 		customerEmail.setValue(email);
 		properties.add(customerEmail);
-		
 
 		formRequest.setProperties(properties);
 		formRequest.setAction("completed");
 		formRequest.setTaskId(orderTaskId);
 		formsApi.submitForm(formRequest);
-		CommandResource commandResource=resourceAssembler.toResource(processInstanceId);
+		CommandResource commandResource = resourceAssembler.toResource(processInstanceId);
 		commandResource.setOrderId(trackingId);
 		return commandResource;
 	}
@@ -244,12 +244,12 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 		paymentStatus.setType("String");
 		paymentStatus.setValue(processPaymentRequest.getPaymentStatus());
 		properties.add(paymentStatus);
-		
+
 		formRequest.setProperties(properties);
 		formRequest.setAction("completed");
 		formRequest.setTaskId(processPaymentRequest.getTaskId());
 		formsApi.submitForm(formRequest);
-		CommandResource commandResource=resourceAssembler.toResource(processInstanceId);
+		CommandResource commandResource = resourceAssembler.toResource(processInstanceId);
 		return commandResource;
 	}
 
@@ -266,36 +266,44 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 		decision.setType("String");
 		decision.setValue(acceptOrderRequest.getDecision());
 		properties.add(decision);
-		
+
 		RestFormProperty deliveryTime = new RestFormProperty();
 		deliveryTime.setId("deliveryTime");
 		deliveryTime.setName("deliveryTime");
 		deliveryTime.setType("String");
 		deliveryTime.setValue(acceptOrderRequest.getDeliveryTime());
 		properties.add(deliveryTime);
-		
+
 		formRequest.setProperties(properties);
 		formRequest.setAction("completed");
 		formRequest.setTaskId(acceptOrderRequest.getTaskId());
 		formsApi.submitForm(formRequest);
-		//orderRepository.findByOrderId(acceptOrderRequest.getOrderId());
+		// orderRepository.findByOrderId(acceptOrderRequest.getOrderId());
 		sendNotification(acceptOrderRequest.getOrderId());
-		CommandResource commandResource=resourceAssembler.toResource(processInstanceId);
+		CommandResource commandResource = resourceAssembler.toResource(processInstanceId);
 		return commandResource;
 	}
-	
+
 	@Override
 	public NotificationDTO sendNotification(String orderId) {
-		NotificationDTO notificationDTO=new NotificationDTO();
+		NotificationDTO notificationDTO = new NotificationDTO();
 		notificationDTO.setDate(Instant.now());
 		notificationDTO.setMessage("Your order request has been accepted by the restaurant");
 		notificationDTO.setTitle("Order Accepted");
 		notificationDTO.setTargetId(orderId);
 		notificationDTO.setType("AcceptOrder");
-		NotificationDTO result=notificationService.save(notificationDTO);
-		log.info("Current User is "+SecurityUtils.getCurrentUserLogin().get());
-		template.convertAndSendToUser(SecurityUtils.getCurrentUserLogin().get(), "/queue/notification",result );
-       // this.template.convertAndSend("/chat",  new SimpleDateFormat("HH:mm:ss").format(new Date())+"- "+"sample message");
+		NotificationDTO result = notificationService.save(notificationDTO);
+		log.info("Current User is " + SecurityUtils.getCurrentUserLogin().get());
+		template.convertAndSend("/topic/test", "test");
+		
+		template.convertAndSendToUser(SecurityUtils.getCurrentUserLogin().get(), "/queue/notification",
+				"Sample message hello " + SecurityUtils.getCurrentUserLogin().get());
+		// SimpleDateFormat("HH:mm:ss").format(new Date())+"- "+"sample message");
+		
+		System.out.println("getMessageChannel " + template.getMessageChannel() + " getUserDestinationPrefix "
+				+ template.getUserDestinationPrefix() + " getDefaultDestination " + template.getDefaultDestination()
+				+ " getSendTimeout " + template.getSendTimeout() + " getMessageConverter "
+				+ template.getMessageConverter());
 
 		return result;
 	}

@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "delivery_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "deliveryinfo")
+@Document(indexName = "orderdeliveryinfo",type="orderdeliveryinfo")
 public class DeliveryInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
