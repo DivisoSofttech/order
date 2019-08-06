@@ -294,7 +294,7 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 		notificationDTO.setType("AcceptOrder");
 		NotificationDTO result=notificationService.save(notificationDTO);
 		log.info("Current User is "+SecurityUtils.getCurrentUserLogin().get());
-		template.convertAndSendToUser(SecurityUtils.getCurrentUserLogin().get(), "/secured/user/queue/notification",result );
+		template.convertAndSendToUser(SecurityUtils.getCurrentUserLogin().get(), "/queue/notification",result );
        // this.template.convertAndSend("/chat",  new SimpleDateFormat("HH:mm:ss").format(new Date())+"- "+"sample message");
 
 		return result;
