@@ -213,8 +213,8 @@ jhipster:
 
 # application:
 bpmn:
-   url: http://35.231.249.189:8070/activiti-rest/service
-   processId: process:13:19305
+   url: http://34.74.192.113:8080/activiti-rest/service
+   processId: process:1:10004
    security:
       basicAuth:
          username: kermit

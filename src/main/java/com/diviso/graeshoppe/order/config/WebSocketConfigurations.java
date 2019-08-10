@@ -30,6 +30,7 @@ public class WebSocketConfigurations implements WebSocketMessageBrokerConfigurer
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
 		registry.setApplicationDestinationPrefixes("/app")
 		.enableSimpleBroker("/queue/notification","/topic");
+		
 		//registry.setUserDestinationPrefix("/secured/user");
 	}
 }
