@@ -20,7 +20,7 @@ package com.diviso.graeshoppe.order.service.dto;
  * @author MayaSanjeev
  * mayabytatech, maya.k.k@lxisoft.com
  */
-public class OrderLine {
+public class ReportOrderLine {
 
 	private Integer quantity;
 	

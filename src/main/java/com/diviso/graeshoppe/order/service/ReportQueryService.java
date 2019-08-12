@@ -22,7 +22,7 @@ import org.springframework.data.domain.Pageable;
 import com.diviso.graeshoppe.order.client.store.domain.Store;
 import com.diviso.graeshoppe.order.domain.Address;
 import com.diviso.graeshoppe.order.domain.Order;
-import com.diviso.graeshoppe.order.service.dto.OrderLine;
+import com.diviso.graeshoppe.order.service.dto.ReportOrderLine;
 
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
@@ -43,7 +43,7 @@ public interface ReportQueryService {
 	 * @param orderId
 	 * @return
 	 */
-	List<OrderLine> findOrderLinesByOrderId(String orderId);
+	List<ReportOrderLine> findOrderLinesByOrderId(String orderId);
 
 	/**
 	 * @param long1

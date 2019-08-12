@@ -36,8 +36,9 @@ import com.diviso.graeshoppe.order.domain.Order;
 import com.diviso.graeshoppe.order.service.ReportQueryService;
 
 import com.diviso.graeshoppe.order.service.dto.AddressDTO;
-import com.diviso.graeshoppe.order.service.dto.OrderLine;
+
 import com.diviso.graeshoppe.order.service.dto.OrderMaster;
+import com.diviso.graeshoppe.order.service.dto.ReportOrderLine;
 
 import io.github.jhipster.web.util.ResponseUtil;
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
@@ -96,9 +97,9 @@ public class ReportQueryResource {
 				
 			}
 			
-			List<OrderLine> orderLines = reportService.findOrderLinesByOrderId(orderId);
+			List<ReportOrderLine> orderLines = reportService.findOrderLinesByOrderId(orderId);
 
-			List<OrderLine> orderList = new ArrayList<OrderLine>(orderLines);
+			List<ReportOrderLine> orderList = new ArrayList<ReportOrderLine>(orderLines);
 
 			orderMaster.setOrderLine(orderList);
 

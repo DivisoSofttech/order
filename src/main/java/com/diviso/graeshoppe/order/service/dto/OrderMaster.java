@@ -38,7 +38,7 @@ public class OrderMaster {
 	
 	private String notes;
 	
-	private List<OrderLine> orderLine;
+	private List<ReportOrderLine> orderLine;
 	
 	private Double deliveryCharge;
 	
@@ -136,11 +136,11 @@ public class OrderMaster {
 		this.notes = notes;
 	}
 
-	public List<OrderLine> getOrderLine() {
+	public List<ReportOrderLine> getOrderLine() {
 		return orderLine;
 	}
 
-	public void setOrderLine(List<OrderLine> orderLine) {
+	public void setOrderLine(List<ReportOrderLine> orderLine) {
 		this.orderLine = orderLine;
 	}
 
