@@ -33,6 +33,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -285,6 +286,7 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 	}
 
 	@Override
+	//@SendToUser("/queue/notification")
 	public NotificationDTO sendNotification(String orderId) {
 		NotificationDTO notificationDTO = new NotificationDTO();
 		notificationDTO.setDate(Instant.now());
@@ -295,9 +297,10 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 		NotificationDTO result = notificationService.save(notificationDTO);
 		log.info("Current User is " + SecurityUtils.getCurrentUserLogin().get());
 		template.convertAndSend("/topic/test", "test");
-		
-		template.convertAndSendToUser(SecurityUtils.getCurrentUserLogin().get(), "/queue/notification",
-				"Sample message hello " + SecurityUtils.getCurrentUserLogin().get());
+		String username=SecurityUtils.getCurrentUserLogin().get();
+		template.convertAndSendToUser(username, "/queue/notification",
+				"Sample message hello " + username);
+
 		// SimpleDateFormat("HH:mm:ss").format(new Date())+"- "+"sample message");
 		
 		System.out.println("getMessageChannel " + template.getMessageChannel() + " getUserDestinationPrefix "

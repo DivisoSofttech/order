@@ -11,15 +11,17 @@ import com.diviso.graeshoppe.order.service.dto.OrderDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +32,22 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class OrderCommandResource {
 
+	@Autowired
+	private  SimpMessagingTemplate template;
+
     private final Logger log = LoggerFactory.getLogger(OrderCommandResource.class);
 
     private static final String ENTITY_NAME = "orderOrder";
 
     private final OrderCommandService orderService;
+    
+    @GetMapping("/send")
+    public void send(Principal principal) {
+    	log.info("User is #################################### "+principal.getName());
+    	template.convertAndSendToUser(principal.getName(), "/queue/notification", "Message from "+principal.getName());
+   
+    	
+    }
 
     public OrderCommandResource(OrderCommandService orderService) {
         this.orderService = orderService;
