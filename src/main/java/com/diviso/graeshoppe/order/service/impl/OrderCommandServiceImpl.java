@@ -117,6 +117,7 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 		orderSearchRepository.save(order);
 		CommandResource resource = initiateOrder(orderId, orderDTO.getStoreId(), orderDTO.getCustomerId(),
 				orderDTO.getEmail());
+		resource.setSelfId(result.getId());
 		log.info("Result Resource is " + resource);
 		return resource;
 	}

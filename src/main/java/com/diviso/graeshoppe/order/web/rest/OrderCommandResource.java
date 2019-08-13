@@ -34,6 +34,7 @@ public class OrderCommandResource {
 
 	@Autowired
 	private  SimpMessagingTemplate template;
+	
 
     private final Logger log = LoggerFactory.getLogger(OrderCommandResource.class);
 
