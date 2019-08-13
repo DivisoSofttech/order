@@ -150,13 +150,13 @@ spring:
 security:
   oauth2:
     client:
-      access-token-uri: http://35.196.86.249:8080/auth/realms/graeshoppe/protocol/openid-connect/token
-      user-authorization-uri: http://35.196.86.249:8080/auth/realms/graeshoppe/protocol/openid-connect/auth
+      access-token-uri: http://34.74.192.113:8888/auth/realms/graeshoppe/protocol/openid-connect/token
+      user-authorization-uri: http://34.74.192.113:8888/auth/realms/graeshoppe/protocol/openid-connect/auth
       client-id: account
-      client-secret: 29a095bc-9ced-480b-a719-4e70ce7dcc49
+      client-secret: 8a4c3fda-44ec-485a-9d59-d6d7fdcb1895
       scope: openid profile email
     resource:
-      user-info-uri: http://35.196.86.249:8080/auth/realms/graeshoppe/protocol/openid-connect/userinfo
+      user-info-uri: http://34.74.192.113:8888/auth/realms/graeshoppe/protocol/openid-connect/userinfo
 
 server:
     servlet:
