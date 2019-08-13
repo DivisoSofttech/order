@@ -163,7 +163,7 @@ public class ReportQueryResource {
 		 * });
 		 */
 
-		List<Entry> orderFromCustomer = reportService.findOrderCountByCustomerIdAndStoreId(pageable);
+		//List<Entry> orderFromCustomer = reportService.findOrderCountByCustomerIdAndStoreId(pageable);
 
 		// orderMaster.setOrderFromCustomer(orderFromCustomer.getCount());
 
@@ -172,4 +172,13 @@ public class ReportQueryResource {
 		return ResponseEntity.ok().body(orderMaster);
 	}
 
+	@GetMapping("/order-from-customer")
+	public List<Entry> findOrderCountByCustomerId(Pageable pageable){
+		return reportService.findOrderCountByCustomerId(pageable);
+	}
+	
+	@GetMapping("/order-from-customer-storeid")
+	public List<Entry> findOrderCountByCustomerIdAndStoreId(Pageable pageable){
+		return reportService.findOrderCountByCustomerIdAndStoreId(pageable);
+	}
 }
