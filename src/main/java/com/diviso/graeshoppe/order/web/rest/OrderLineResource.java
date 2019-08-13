@@ -50,10 +50,7 @@ public class OrderLineResource {
             throw new BadRequestAlertException("A new orderLine cannot already have an ID", ENTITY_NAME, "idexists");
         }
         OrderLineDTO result = orderLineService.save(orderLineDTO);
-        if (result.getId() == null) {
-			throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-		}
-        OrderLineDTO result1 = orderLineService.update(result);
+        OrderLineDTO result1=orderLineService.save(result);
         return ResponseEntity.created(new URI("/api/order-lines/" + result1.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result1.getId().toString()))
             .body(result1);
@@ -74,7 +71,7 @@ public class OrderLineResource {
         if (orderLineDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        OrderLineDTO result = orderLineService.update(orderLineDTO);
+        OrderLineDTO result = orderLineService.save(orderLineDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderLineDTO.getId().toString()))
             .body(result);

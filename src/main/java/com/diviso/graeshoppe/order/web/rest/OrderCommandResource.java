@@ -63,6 +63,7 @@ public class OrderCommandResource {
      */
     @PostMapping("/orders")
     public ResponseEntity<CommandResource> createOrder(@RequestBody OrderDTO orderDTO) throws URISyntaxException {
+		orderDTO.setStatusId(1l);
         log.debug("REST request to save Order : {}", orderDTO);
         if (orderDTO.getId() != null) {
             throw new BadRequestAlertException("A new order cannot already have an ID", ENTITY_NAME, "idexists");

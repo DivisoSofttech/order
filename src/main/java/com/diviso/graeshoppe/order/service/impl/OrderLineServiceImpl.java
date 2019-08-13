@@ -55,21 +55,7 @@ public class OrderLineServiceImpl implements OrderLineService {
         return result;
     }
     
-    /**
-     * Save a orderLine.
-     *
-     * @param orderLineDTO the entity to save
-     * @return the persisted entity
-     */
-    @Override
-    public OrderLineDTO update(OrderLineDTO orderLineDTO) {
-        log.debug("Request to save OrderLine : {}", orderLineDTO);
-        OrderLine orderLine = orderLineMapper.toEntity(orderLineDTO);
-        orderLine = orderLineRepository.save(orderLine);
-        OrderLineDTO result = orderLineMapper.toDto(orderLine);
-        orderLineSearchRepository.save(orderLine);
-        return result;
-    }
+  
 
     /**
      * Get all the orderLines.

@@ -54,5 +54,4 @@ public interface OrderLineService {
      */
     Page<OrderLineDTO> search(String query, Pageable pageable);
 
-	OrderLineDTO update(OrderLineDTO orderLineDTO);
 }

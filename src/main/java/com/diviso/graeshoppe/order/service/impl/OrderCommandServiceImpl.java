@@ -119,8 +119,27 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 				orderDTO.getEmail());
 		resource.setSelfId(result.getId());
 		log.info("Result Resource is " + resource);
+		update(result);
 		return resource;
 	}
+	
+	/**
+	 * Update a order.
+	 *
+	 * @param orderDTO the entity to save
+	 * @return the persisted entity
+	 */
+	@Override
+	public OrderDTO update(OrderDTO orderDTO) {
+		log.debug("Request to save Order : {}", orderDTO);
+		Order order = orderMapper.toEntity(orderDTO);
+		order = orderRepository.save(order);
+		OrderDTO result = orderMapper.toDto(order);
+		orderSearchRepository.save(order);
+		
+		return result;
+	}
+
 
 	public CommandResource initiateOrder(String trackingId, String storeId, String customerId, String email) {
 		ProcessInstanceCreateRequest processInstanceCreateRequest = new ProcessInstanceCreateRequest();

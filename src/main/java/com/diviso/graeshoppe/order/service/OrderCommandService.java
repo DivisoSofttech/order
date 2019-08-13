@@ -63,4 +63,6 @@ public interface OrderCommandService {
 	CommandResource acceptOrder(AcceptOrderRequest acceptOrderRequest);
 
 	NotificationDTO sendNotification(String orderId);
+
+	OrderDTO update(OrderDTO orderDTO);
 }
