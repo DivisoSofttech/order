@@ -129,7 +129,7 @@ public class ReportQueryResource {
 			orderMaster.setServiceCharge(store.getStoreSettings().getServiceCharge());
 		}
 
-		List<Entry> customerOrders = reportService.findOrderCountByCustomerId(pageable);
+		/*List<Entry> customerOrders = reportService.findOrderCountByCustomerId(pageable);
 		
 		customerOrders.forEach(customerOrder->{
 			
@@ -138,7 +138,7 @@ public class ReportQueryResource {
 				orderMaster.setCustomersOrder(customerOrder.getCount());
 			}
 			
-		});
+		});*/
 		
 		
 		List<Entry> orderFromCustomer = reportService.findOrderCountByCustomerIdAndStoreId(pageable);
