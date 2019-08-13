@@ -34,7 +34,7 @@ import com.diviso.graeshoppe.order.client.store.domain.Store;
 import com.diviso.graeshoppe.order.domain.Address;
 import com.diviso.graeshoppe.order.domain.DeliveryInfo;
 import com.diviso.graeshoppe.order.domain.Order;
-
+import com.diviso.graeshoppe.order.domain.OrderLine;
 import com.diviso.graeshoppe.order.service.ReportQueryService;
 import com.diviso.graeshoppe.order.service.dto.ReportOrderLine;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
@@ -84,9 +84,9 @@ public class ReportQueryServiceImpl implements ReportQueryService {
 	 * findOrderLinesByOrderId(java.lang.String)
 	 */
 	@Override
-	public List<ReportOrderLine> findOrderLinesByOrderId(String orderId) {
+	public List<OrderLine> findOrderLinesByOrderId(String orderId) {
 		StringQuery searchQuery = new StringQuery(termQuery("order.id", orderId).toString());
-		return elasticsearchOperations.queryForList(searchQuery, ReportOrderLine.class);
+		return elasticsearchOperations.queryForList(searchQuery, OrderLine.class);
 	}
 
 	/*

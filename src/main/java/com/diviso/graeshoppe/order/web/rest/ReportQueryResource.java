@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.diviso.graeshoppe.order.client.store.domain.Store;
 import com.diviso.graeshoppe.order.domain.Address;
 import com.diviso.graeshoppe.order.domain.Order;
-
+import com.diviso.graeshoppe.order.domain.OrderLine;
 import com.diviso.graeshoppe.order.service.ReportQueryService;
 
 import com.diviso.graeshoppe.order.service.dto.AddressDTO;
@@ -101,17 +101,26 @@ public class ReportQueryResource {
 
 			}
 
-			List<ReportOrderLine> orderLines = reportService.findOrderLinesByOrderId(orderId);
+			List<OrderLine> orderLines = reportService.findOrderLinesByOrderId(orderId);
 
-			log.info(".................orderLines............"+orderLines);
-			List<ReportOrderLine> orderList = new ArrayList<ReportOrderLine>(orderLines);
+			log.info(".................orderLines............" + orderLines);
+			List<ReportOrderLine> orderList = new ArrayList<ReportOrderLine>();
+			orderLines.forEach(orderline -> {
+
+				ReportOrderLine reportOrderLine = new ReportOrderLine();
+				
+				reportOrderLine.setItem("add product to this id" + orderline.getProductId());
+				reportOrderLine.setQuantity(orderline.getQuantity());
+				reportOrderLine.setTotal(orderline.getTotal());
+				orderList.add(reportOrderLine);
+			});
 
 			orderMaster.setOrderLine(orderList);
 
 			Address orderAddress = reportService.findOrderAddressById(order.getDeliveryInfo().getId());
 
-			log.info(".................orderAddress............"+orderAddress);
-			
+			log.info(".................orderAddress............" + orderAddress);
+
 			if (orderAddress != null) {
 
 				orderMaster.setAddressType(orderAddress.getAddressType());
@@ -130,9 +139,9 @@ public class ReportQueryResource {
 			}
 
 			Store store = reportService.findStoreByStoreId(order.getStoreId());
-			
-			log.info(".................store............"+store);
-			
+
+			log.info(".................store............" + store);
+
 			orderMaster.setStorePhone(store.getContactNo());
 
 			orderMaster.setServiceCharge(store.getStoreSettings().getServiceCharge());
