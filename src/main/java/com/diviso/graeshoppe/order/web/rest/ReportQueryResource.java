@@ -139,12 +139,15 @@ public class ReportQueryResource {
 			}
 
 			Store store = reportService.findStoreByStoreId(order.getStoreId());
+			
+			if(store!=null){
 
 			log.info(".................store............" + store);
 
 			orderMaster.setStorePhone(store.getContactNo());
 
 			orderMaster.setServiceCharge(store.getStoreSettings().getServiceCharge());
+			}
 		}
 
 		/*
