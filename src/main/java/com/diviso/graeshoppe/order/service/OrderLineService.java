@@ -53,4 +53,6 @@ public interface OrderLineService {
      * @return the list of entities
      */
     Page<OrderLineDTO> search(String query, Pageable pageable);
+
+	OrderLineDTO update(OrderLineDTO orderLineDTO);
 }
