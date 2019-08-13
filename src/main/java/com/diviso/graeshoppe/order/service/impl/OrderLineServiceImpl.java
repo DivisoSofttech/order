@@ -51,7 +51,8 @@ public class OrderLineServiceImpl implements OrderLineService {
         OrderLine orderLine = orderLineMapper.toEntity(orderLineDTO);
         orderLine = orderLineRepository.save(orderLine);
         OrderLineDTO result = orderLineMapper.toDto(orderLine);
-        orderLineSearchRepository.save(orderLine);
+        OrderLine orderLine1= orderLineSearchRepository.save(orderLine);
+        orderLineSearchRepository.save(orderLine1);
         return result;
     }
 
