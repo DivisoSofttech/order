@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -52,16 +54,18 @@ import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 @RequestMapping("/api")
 public class ReportQueryResource {
 
+	private final Logger log = LoggerFactory.getLogger(ReportQueryResource.class);
+
 	@Autowired
 	ReportQueryService reportService;
 
 	@GetMapping("/main-report/{orderId}")
-	public ResponseEntity<OrderMaster> getOrderMaster(@PathVariable String orderId,Pageable pageable) {
+	public ResponseEntity<OrderMaster> getOrderMaster(@PathVariable String orderId, Pageable pageable) {
 
 		OrderMaster orderMaster = new OrderMaster();
 
 		Order order = reportService.findOrderByOrderId(orderId);
-
+		log.info("..................order......................" + order);
 		if (order != null) {
 			orderMaster.setStoreName(order.getStoreId());
 
@@ -77,34 +81,37 @@ public class ReportQueryResource {
 
 			String stringDate = Date.from(insatantDate).toString();
 
-			// date to string conversion for report format 
-			
+			// date to string conversion for report format
+
 			orderMaster.setDueDate(stringDate.substring(4, 10));
 
 			orderMaster.setDueTime(stringDate.substring(11, 16));
 
 			orderMaster.setDeliveryCharge(order.getDeliveryInfo().getDeliveryCharge());
 
-			// date to string conversion for report format 
-			
+			// date to string conversion for report format
+
 			String orderDate = Date.from(order.getDate()).toString();
 
 			orderMaster.setOrderPlaceAt(orderDate.substring(4, 16));
 
 			if (order.getStatus() != null) {
-				
+
 				orderMaster.setOrderStatus(order.getStatus().getName());
-				
+
 			}
-			
+
 			List<ReportOrderLine> orderLines = reportService.findOrderLinesByOrderId(orderId);
 
+			log.info(".................orderLines............"+orderLines);
 			List<ReportOrderLine> orderList = new ArrayList<ReportOrderLine>(orderLines);
 
 			orderMaster.setOrderLine(orderList);
 
 			Address orderAddress = reportService.findOrderAddressById(order.getDeliveryInfo().getId());
 
+			log.info(".................orderAddress............"+orderAddress);
+			
 			if (orderAddress != null) {
 
 				orderMaster.setAddressType(orderAddress.getAddressType());
@@ -123,30 +130,33 @@ public class ReportQueryResource {
 			}
 
 			Store store = reportService.findStoreByStoreId(order.getStoreId());
-
+			
+			log.info(".................store............"+store);
+			
 			orderMaster.setStorePhone(store.getContactNo());
 
 			orderMaster.setServiceCharge(store.getStoreSettings().getServiceCharge());
 		}
 
-		/*List<Entry> customerOrders = reportService.findOrderCountByCustomerId(pageable);
-		
-		customerOrders.forEach(customerOrder->{
-			
-			if(customerOrder.getKey().equals(order.getCustomerId())){
-				
-				orderMaster.setCustomersOrder(customerOrder.getCount());
-			}
-			
-		});*/
-		
-		
+		/*
+		 * List<Entry> customerOrders =
+		 * reportService.findOrderCountByCustomerId(pageable);
+		 * 
+		 * customerOrders.forEach(customerOrder->{
+		 * 
+		 * if(customerOrder.getKey().equals(order.getCustomerId())){
+		 * 
+		 * orderMaster.setCustomersOrder(customerOrder.getCount()); }
+		 * 
+		 * });
+		 */
+
 		List<Entry> orderFromCustomer = reportService.findOrderCountByCustomerIdAndStoreId(pageable);
-		
-		//orderMaster.setOrderFromCustomer(orderFromCustomer.getCount());
-		
-		//want to include orderacceptedat ,orderfromcustomer,customerorder
-		
+
+		// orderMaster.setOrderFromCustomer(orderFromCustomer.getCount());
+
+		// want to include orderacceptedat ,orderfromcustomer,customerorder
+
 		return ResponseEntity.ok().body(orderMaster);
 	}
 
