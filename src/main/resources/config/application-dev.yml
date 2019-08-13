@@ -53,8 +53,8 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/orderdb?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-        username: user
-        password: password
+        username: root
+        password: root
         hikari:
             poolName: Hikari
             auto-commit: false
@@ -79,17 +79,17 @@ spring:
             hibernate.cache.hazelcast.use_lite_member: true
     data:
         elasticsearch:
-           cluster-name: 26f23d0d6b5342ae9958c8641de01c9b
-           cluster-nodes: https://26f23d0d6b5342ae9958c8641de01c9b.asia-northeast1.gcp.cloud.es.io:9243/
+           cluster-name: 507f5edb2bc243509cf817eb605aea0f
+           cluster-nodes: https://507f5edb2bc243509cf817eb605aea0f.asia-northeast1.gcp.cloud.es.io:9243/
            properties:
                path:
                    logs: target/elasticsearch/log
                    data: target/elasticsearch/data
         jest:
            username: elastic
-           password: GcxvkbRjEWJ0o8pZOlX93edO
+           password: D022NWI8x1Z42QPg40vq25S4
            readTimeout: 10000
-           uri: https://26f23d0d6b5342ae9958c8641de01c9b.asia-northeast1.gcp.cloud.es.io:9243/
+           uri: https://507f5edb2bc243509cf817eb605aea0f.asia-northeast1.gcp.cloud.es.io:9243/
     liquibase:
         contexts: dev
     mail:
