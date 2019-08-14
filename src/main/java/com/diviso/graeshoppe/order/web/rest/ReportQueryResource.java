@@ -75,6 +75,8 @@ public class ReportQueryResource {
 
 			orderMaster.setCustomerId(order.getCustomerId());
 
+			orderMaster.setOrderNumber(order.getOrderId());
+			
 			orderMaster.setMethodOfOrder(order.getDeliveryInfo().getDeliveryType());
 
 			Instant insatantDate = order.getDeliveryInfo().getExpectedDelivery();

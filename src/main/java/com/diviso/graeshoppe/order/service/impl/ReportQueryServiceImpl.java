@@ -85,7 +85,7 @@ public class ReportQueryServiceImpl implements ReportQueryService {
 	 */
 	@Override
 	public List<OrderLine> findOrderLinesByOrderId(String orderId) {
-		StringQuery searchQuery = new StringQuery(termQuery("order.orderId", orderId).toString());
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("order.orderId", orderId)).build();
 		return elasticsearchOperations.queryForList(searchQuery, OrderLine.class);
 	}
 
