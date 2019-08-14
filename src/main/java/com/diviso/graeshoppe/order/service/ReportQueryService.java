@@ -19,11 +19,11 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
+import com.diviso.graeshoppe.order.client.product.model.Product;
 import com.diviso.graeshoppe.order.client.store.domain.Store;
 import com.diviso.graeshoppe.order.domain.Address;
 import com.diviso.graeshoppe.order.domain.Order;
 import com.diviso.graeshoppe.order.domain.OrderLine;
-import com.diviso.graeshoppe.order.service.dto.Product;
 import com.diviso.graeshoppe.order.service.dto.ReportOrderLine;
 
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;

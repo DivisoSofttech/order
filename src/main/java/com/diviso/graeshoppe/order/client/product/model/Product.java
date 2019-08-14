@@ -1,18 +1,19 @@
-package com.diviso.graeshoppe.order.service.dto;
+package com.diviso.graeshoppe.order.client.product.model;
 
 import java.util.Objects;
-import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
-import com.diviso.graeshoppe.client.product.model.Brand;
-import com.diviso.graeshoppe.client.product.model.Category;
-import com.diviso.graeshoppe.client.product.model.ComboLineItem;
-import com.diviso.graeshoppe.client.product.model.Discount;
-import com.diviso.graeshoppe.client.product.model.Label;
-import com.diviso.graeshoppe.client.product.model.Location;
-import com.diviso.graeshoppe.client.product.model.Manufacturer;
-import com.diviso.graeshoppe.client.product.model.Supplier;
-import com.diviso.graeshoppe.client.product.model.TaxCategory;
-import com.diviso.graeshoppe.client.product.model.UOM;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.diviso.graeshoppe.order.client.product.model.AuxilaryLineItem;
+import com.diviso.graeshoppe.order.client.product.model.Brand;
+import com.diviso.graeshoppe.order.client.product.model.Category;
+import com.diviso.graeshoppe.order.client.product.model.ComboLineItem;
+import com.diviso.graeshoppe.order.client.product.model.Discount;
+import com.diviso.graeshoppe.order.client.product.model.Label;
+import com.diviso.graeshoppe.order.client.product.model.Location;
+import com.diviso.graeshoppe.order.client.product.model.Manufacturer;
+import com.diviso.graeshoppe.order.client.product.model.Supplier;
+import com.diviso.graeshoppe.order.client.product.model.TaxCategory;
+import com.diviso.graeshoppe.order.client.product.model.UOM;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

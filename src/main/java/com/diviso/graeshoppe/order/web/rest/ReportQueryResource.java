@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diviso.graeshoppe.order.client.product.model.Product;
 import com.diviso.graeshoppe.order.client.store.domain.Store;
 import com.diviso.graeshoppe.order.domain.Address;
 import com.diviso.graeshoppe.order.domain.Order;
@@ -40,7 +41,7 @@ import com.diviso.graeshoppe.order.service.ReportQueryService;
 import com.diviso.graeshoppe.order.service.dto.AddressDTO;
 
 import com.diviso.graeshoppe.order.service.dto.OrderMaster;
-import com.diviso.graeshoppe.order.service.dto.Product;
+
 import com.diviso.graeshoppe.order.service.dto.ReportOrderLine;
 
 import io.github.jhipster.web.util.ResponseUtil;
@@ -107,6 +108,7 @@ public class ReportQueryResource {
 			List<OrderLine> orderLines = reportService.findOrderLinesByOrderId(orderId);
 
 			log.info(".................orderLines............" + orderLines);
+			
 			List<ReportOrderLine> orderList = new ArrayList<ReportOrderLine>();
 			orderLines.forEach(orderline -> {
 
