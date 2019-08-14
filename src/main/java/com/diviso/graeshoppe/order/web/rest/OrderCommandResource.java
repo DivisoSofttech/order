@@ -84,12 +84,12 @@ public class OrderCommandResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/orders")
-    public ResponseEntity<CommandResource> updateOrder(@RequestBody OrderDTO orderDTO) throws URISyntaxException {
+    public ResponseEntity<OrderDTO> updateOrder(@RequestBody OrderDTO orderDTO) throws URISyntaxException {
         log.debug("REST request to update Order : {}", orderDTO);
         if (orderDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        CommandResource result = orderService.save(orderDTO);
+        OrderDTO result = orderService.update(orderDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderDTO.getId().toString()))
             .body(result);
