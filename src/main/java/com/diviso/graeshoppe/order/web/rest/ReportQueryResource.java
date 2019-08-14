@@ -116,6 +116,8 @@ public class ReportQueryResource {
 				
 				Product product = reportService.findProductByProductId(orderline.getProductId());
 				
+				log.info("..............product..........   "+product);
+				
 				reportOrderLine.setItem(product.getName());
 				
 				reportOrderLine.setQuantity(orderline.getQuantity());
