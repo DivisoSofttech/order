@@ -119,7 +119,7 @@ public class ReportQueryResource {
 
 			orderMaster.setOrderLine(orderList);
 
-			Address orderAddress = reportService.findOrderAddressById(order.getDeliveryInfo().getId());
+			Address orderAddress =order.getDeliveryInfo().getDeliveryAddress();//reportService.findOrderAddressById(order.getDeliveryInfo().getId());
 
 			log.info(".................orderAddress............" + orderAddress);
 
