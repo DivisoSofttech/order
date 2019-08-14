@@ -40,6 +40,7 @@ import com.diviso.graeshoppe.order.service.ReportQueryService;
 import com.diviso.graeshoppe.order.service.dto.AddressDTO;
 
 import com.diviso.graeshoppe.order.service.dto.OrderMaster;
+import com.diviso.graeshoppe.order.service.dto.Product;
 import com.diviso.graeshoppe.order.service.dto.ReportOrderLine;
 
 import io.github.jhipster.web.util.ResponseUtil;
@@ -111,9 +112,14 @@ public class ReportQueryResource {
 
 				ReportOrderLine reportOrderLine = new ReportOrderLine();
 				
-				reportOrderLine.setItem("add product to this id" + orderline.getProductId());
+				Product product = reportService.findProductByProductId(orderline.getProductId());
+				
+				reportOrderLine.setItem(product.getName());
+				
 				reportOrderLine.setQuantity(orderline.getQuantity());
+				
 				reportOrderLine.setTotal(orderline.getTotal());
+				
 				orderList.add(reportOrderLine);
 			});
 

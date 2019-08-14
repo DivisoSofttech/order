@@ -36,6 +36,7 @@ import com.diviso.graeshoppe.order.domain.DeliveryInfo;
 import com.diviso.graeshoppe.order.domain.Order;
 import com.diviso.graeshoppe.order.domain.OrderLine;
 import com.diviso.graeshoppe.order.service.ReportQueryService;
+import com.diviso.graeshoppe.order.service.dto.Product;
 import com.diviso.graeshoppe.order.service.dto.ReportOrderLine;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
 import com.github.vanroy.springdata.jest.aggregation.AggregatedPage;
@@ -160,5 +161,14 @@ public class ReportQueryServiceImpl implements ReportQueryService {
 		});
 		return orderAgg.getBuckets();
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.order.service.ReportQueryService#findProductByProductId(java.lang.Long)
+	 */
+	@Override
+	public Product findProductByProductId(Long productId) {
+		StringQuery stringQuery = new StringQuery(termQuery("id", productId).toString());
+		return elasticsearchOperations.queryForObject(stringQuery, Product.class);
 	}
 }
