@@ -115,11 +115,11 @@ public class ReportQueryResource {
 				ReportOrderLine reportOrderLine = new ReportOrderLine();
 				
 				Product product = reportService.findProductByProductId(orderline.getProductId());
-				
+				if(product!=null){
 				log.info("..............product..........   "+product);
 				
 				reportOrderLine.setItem(product.getName());
-				
+				}
 				reportOrderLine.setQuantity(orderline.getQuantity());
 				
 				reportOrderLine.setTotal(orderline.getTotal());
